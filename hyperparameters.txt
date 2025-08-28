@@ -1,0 +1,98 @@
+python base_model_lightgcn_with_feature_aware_embedding_Initialization.py
+============================================================
+HYPERPARAMETERS
+============================================================
+Epochs: 200
+Batch size: 512
+Learning rate: 1e-3
+Optimizer: Adam
+Embedding dimension: 64
+Number of LightGCN layers: 3
+k for recall@k: 300
+Device: cuda
+Loss function: BPR (Bayesian Personalized Ranking)
+Negative sampling ratio: 1:1
+Negative sampling mode: uniform
+Feature-informed initialization: Enabled
+Number of features: 7
+AMP enabled: True
+AMP dtype: torch.bfloat16
+============================================================
+
+torch.compile enabled with mode='reduce-overhead'
+
+Total trainable parameters: 959,488
+============================================================
+
+
+
+
+python base_model_lightgcn_with_feature_aware_embedding_Initialization.py
+
+============================================================
+HYPERPARAMETERS
+============================================================
+Epochs: 200
+Batch size: 512
+Learning rate: 1e-3
+Optimizer: Adam
+Embedding dimension: 64
+Number of LightGCN layers: 3
+k for recall@k: 300
+Device: cuda
+Loss function: BPR (Bayesian Personalized Ranking)
+Negative sampling ratio: 1:1
+Negative sampling mode: uniform
+Feature-informed initialization: Enabled
+Number of features: 7
+AMP enabled: True
+AMP dtype: torch.bfloat16
+============================================================
+
+torch.compile enabled with mode='reduce-overhead'
+
+Total trainable parameters: 959,488
+============================================================
+
+
+python base_model_lightgcn_with_perf_optimisations.py
+
+============================================================
+HYPERPARAMETERS
+============================================================
+Epochs: 100
+Batch size: 2048
+Learning rate: 1e-3
+Optimizer: Adam
+Embedding dimension: 64
+Number of LightGCN layers: 3
+k for recall@k: 300
+Device: cuda
+Loss function: BPR (Bayesian Personalized Ranking)
+Negative sampling ratio: 1:1
+Negative sampling mode: uniform
+Embeddings save directory: embeddings
+============================================================
+
+Total trainable parameters: 959,488
+============================================================
+
+
+python base_model_lightgcn.py
+
+============================================================
+HYPERPARAMETERS
+============================================================
+Epochs: 100
+Batch size: 2048
+Learning rate: 1e-3
+Optimizer: Adam
+Embedding dimension: 64
+Number of LightGCN layers: 3
+k for recall@k: 300
+Device: cuda
+Loss function: BPR (Bayesian Personalized Ranking)
+Negative sampling ratio: 1:1
+Embeddings save directory: embeddings
+============================================================
+

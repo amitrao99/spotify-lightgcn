@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# Except .py and .txt files
+!base_model_lightgcn_with_perf_optimisations.py
+!base_model_lightgcn_with_perf_optimisations.txt
+!.gitignore

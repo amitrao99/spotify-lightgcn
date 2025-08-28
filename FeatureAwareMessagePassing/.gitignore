@@ -1,0 +1,9 @@
+*
+
+# Track .py and .txt
+!base_model_lightgcn_with_feature_aware_embedding_Initialization_and_feature_aware_message_passing.py
+!base_model_lightgcn_with_feature_aware_embedding_Initialization_and_feature_aware_message_passing.txt
+
+# Also track checkpoint file
+!feature_aware_lightgcn_checkpoint.pt
+!.gitignore

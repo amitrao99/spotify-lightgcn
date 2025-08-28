@@ -1,0 +1,21 @@
+# Ignore everything by default
+*
+
+# Always keep these tracked
+!.gitignore
+!hyperparameters.txt
+
+# Allow these directories (the directory AND everything inside)
+!BaseSetup/
+!BaseSetup/**
+!BaseSetupWithPerfOptimisations/
+!BaseSetupWithPerfOptimisations/**
+!FeatureAwareInitialization/
+!FeatureAwareInitialization/**
+!FeatureAwareMessagePassing/
+!FeatureAwareMessagePassing/**
+!MetricsCollection/
+!MetricsCollection/**
+!FinalPlots/
+!FinalPlots/**
+

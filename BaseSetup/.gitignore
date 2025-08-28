@@ -1,0 +1,15 @@
+# Ignore everything in BaseSetup
+*
+
+# Except these specific files:
+!base_model_lightgcn.py
+!base_model_lightgcn_logs.txt
+!data_object.pt
+!dataset_stats.json
+!playlist_info.json
+!preprocess.py
+!song_info.json
+
+# Ignore embeddings folder entirely
+embeddings/
+!.gitignore

@@ -1,0 +1,111 @@
+root@58e12a68a149:/MastersProject/LoggingAwareSetup/BaseSetup# python model.py
+Data(edge_index=[2, 923296], num_nodes=14992, edge_label=[461648], edge_label_index=[2, 461648])
+Data(edge_index=[2, 923296], num_nodes=14992, edge_label=[98924], edge_label_index=[2, 98924])
+Data(edge_index=[2, 1121144], num_nodes=14992, edge_label=[98924], edge_label_index=[2, 98924])
+There are 5696 unique songs in the dataset
+0.05266853932584269
+
+============================================================
+HYPERPARAMETERS
+============================================================
+Epochs: 30
+Batch size: 2048
+Learning rate: 1e-3
+Optimizer: Adam
+Embedding dimension: 64
+Number of LightGCN layers: 3
+k for recall@k: 300
+Device: cuda
+Loss function: BPR (Bayesian Personalized Ranking)
+Negative sampling ratio: 1:1
+Embeddings save directory: embeddings
+============================================================
+
+Total trainable parameters: 959,488
+============================================================
+
+/opt/conda/envs/py_3.12/lib/python3.12/site-packages/torch_geometric/data/storage.py:452: UserWarning: Unable to accurately infer 'num_nodes' from the attribute set '{'edge_index'}'. Please explicitly set 'num_nodes' as an attribute of 'data' to suppress this warning
+  warnings.warn(
+Epoch 0: train_loss=0.6930, val_recall=0.0665
+  Training   - Batch size: 2048, Time: 2.43s, Avg batch time: 0.487s, Throughput: 189661 edges/sec
+  Validation - Batch size: 2048, Time: 4.62s, Avg batch time: 0.924s, Throughput: 21396 edges/sec
+Epoch 1: train_loss=0.6929, val_recall=0.0887
+  Training   - Batch size: 2048, Time: 2.16s, Avg batch time: 0.432s, Throughput: 213504 edges/sec
+  Validation - Batch size: 2048, Time: 4.53s, Avg batch time: 0.905s, Throughput: 21838 edges/sec
+Epoch 2: train_loss=0.6927, val_recall=0.1319
+  Training   - Batch size: 2048, Time: 2.17s, Avg batch time: 0.434s, Throughput: 212856 edges/sec
+  Validation - Batch size: 2048, Time: 4.54s, Avg batch time: 0.907s, Throughput: 21790 edges/sec
+Epoch 3: train_loss=0.6925, val_recall=0.1922
+  Training   - Batch size: 2048, Time: 2.14s, Avg batch time: 0.428s, Throughput: 215514 edges/sec
+  Validation - Batch size: 2048, Time: 4.53s, Avg batch time: 0.905s, Throughput: 21835 edges/sec
+Epoch 4: train_loss=0.6921, val_recall=0.2542
+  Training   - Batch size: 2048, Time: 2.15s, Avg batch time: 0.431s, Throughput: 214250 edges/sec
+  Validation - Batch size: 2048, Time: 4.45s, Avg batch time: 0.891s, Throughput: 22191 edges/sec
+Epoch 5: train_loss=0.6915, val_recall=0.3087
+  Training   - Batch size: 2048, Time: 2.24s, Avg batch time: 0.447s, Throughput: 206435 edges/sec
+  Validation - Batch size: 2048, Time: 4.46s, Avg batch time: 0.892s, Throughput: 22154 edges/sec
+Epoch 6: train_loss=0.6908, val_recall=0.3485
+  Training   - Batch size: 2048, Time: 2.22s, Avg batch time: 0.445s, Throughput: 207569 edges/sec
+  Validation - Batch size: 2048, Time: 4.48s, Avg batch time: 0.895s, Throughput: 22073 edges/sec
+Epoch 7: train_loss=0.6897, val_recall=0.3777
+  Training   - Batch size: 2048, Time: 2.15s, Avg batch time: 0.429s, Throughput: 215049 edges/sec
+  Validation - Batch size: 2048, Time: 4.53s, Avg batch time: 0.906s, Throughput: 21815 edges/sec
+Epoch 8: train_loss=0.6883, val_recall=0.3954
+  Training   - Batch size: 2048, Time: 2.25s, Avg batch time: 0.449s, Throughput: 205504 edges/sec
+  Validation - Batch size: 2048, Time: 4.53s, Avg batch time: 0.907s, Throughput: 21802 edges/sec
+Epoch 9: train_loss=0.6866, val_recall=0.4050
+  Training   - Batch size: 2048, Time: 2.22s, Avg batch time: 0.445s, Throughput: 207672 edges/sec
+  Validation - Batch size: 2048, Time: 4.47s, Avg batch time: 0.893s, Throughput: 22122 edges/sec
+Epoch 10: train_loss=0.6846, val_recall=0.4105
+  Training   - Batch size: 2048, Time: 2.26s, Avg batch time: 0.452s, Throughput: 204181 edges/sec
+  Validation - Batch size: 2048, Time: 4.51s, Avg batch time: 0.903s, Throughput: 21893 edges/sec
+Epoch 11: train_loss=0.6821
+  Training   - Batch size: 2048, Time: 2.19s, Avg batch time: 0.439s, Throughput: 210513 edges/sec
+Epoch 12: train_loss=0.6793
+  Training   - Batch size: 2048, Time: 2.25s, Avg batch time: 0.451s, Throughput: 204827 edges/sec
+Epoch 13: train_loss=0.6761
+  Training   - Batch size: 2048, Time: 2.23s, Avg batch time: 0.447s, Throughput: 206726 edges/sec
+Epoch 14: train_loss=0.6725
+  Training   - Batch size: 2048, Time: 2.19s, Avg batch time: 0.439s, Throughput: 210397 edges/sec
+Epoch 15: train_loss=0.6685, val_recall=0.4142
+  Training   - Batch size: 2048, Time: 2.23s, Avg batch time: 0.446s, Throughput: 207227 edges/sec
+  Validation - Batch size: 2048, Time: 4.46s, Avg batch time: 0.893s, Throughput: 22145 edges/sec
+Epoch 16: train_loss=0.6643
+  Training   - Batch size: 2048, Time: 2.24s, Avg batch time: 0.448s, Throughput: 206191 edges/sec
+Epoch 17: train_loss=0.6598
+  Training   - Batch size: 2048, Time: 2.16s, Avg batch time: 0.432s, Throughput: 213482 edges/sec
+Epoch 18: train_loss=0.6550
+  Training   - Batch size: 2048, Time: 2.23s, Avg batch time: 0.446s, Throughput: 207245 edges/sec
+Epoch 19: train_loss=0.6500
+  Training   - Batch size: 2048, Time: 2.18s, Avg batch time: 0.435s, Throughput: 212205 edges/sec
+Epoch 20: train_loss=0.6450, val_recall=0.4139
+  Training   - Batch size: 2048, Time: 2.23s, Avg batch time: 0.447s, Throughput: 206591 edges/sec
+  Validation - Batch size: 2048, Time: 4.50s, Avg batch time: 0.899s, Throughput: 21986 edges/sec
+Epoch 21: train_loss=0.6400
+  Training   - Batch size: 2048, Time: 2.24s, Avg batch time: 0.448s, Throughput: 206009 edges/sec
+Epoch 22: train_loss=0.6348
+  Training   - Batch size: 2048, Time: 2.20s, Avg batch time: 0.441s, Throughput: 209442 edges/sec
+Epoch 23: train_loss=0.6298
+  Training   - Batch size: 2048, Time: 2.24s, Avg batch time: 0.448s, Throughput: 206128 edges/sec
+Epoch 24: train_loss=0.6250
+  Training   - Batch size: 2048, Time: 2.18s, Avg batch time: 0.436s, Throughput: 211770 edges/sec
+Epoch 25: train_loss=0.6201, val_recall=0.4157
+  Training   - Batch size: 2048, Time: 2.17s, Avg batch time: 0.434s, Throughput: 212589 edges/sec
+  Validation - Batch size: 2048, Time: 4.54s, Avg batch time: 0.909s, Throughput: 21754 edges/sec
+Epoch 26: train_loss=0.6156
+  Training   - Batch size: 2048, Time: 2.17s, Avg batch time: 0.434s, Throughput: 212571 edges/sec
+Epoch 27: train_loss=0.6114
+  Training   - Batch size: 2048, Time: 2.25s, Avg batch time: 0.450s, Throughput: 205394 edges/sec
+Epoch 28: train_loss=0.6071
+  Training   - Batch size: 2048, Time: 2.16s, Avg batch time: 0.432s, Throughput: 213500 edges/sec
+Epoch 29: train_loss=0.6032
+  Training   - Batch size: 2048, Time: 2.23s, Avg batch time: 0.446s, Throughput: 206878 edges/sec
+
+Best validation recall@k: 0.41573257483289455 at epoch 25
+
+Evaluating on test set...
+Test set recall@k: 0.4199
+Test evaluation - Batch size: 2048, Time: 5.28s, Avg batch time: 1.056s, Throughput: 18721 edges/sec
+root@58e12a68a149:/MastersProject/LoggingAwareSetup/BaseSetup# 
+
+
