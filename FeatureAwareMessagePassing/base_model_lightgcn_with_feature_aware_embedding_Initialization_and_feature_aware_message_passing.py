@@ -140,7 +140,7 @@ if hasattr(torch.backends, "cudnn"):
 
 # Load audio features
 print("Loading audio features from SQLite...")
-song_features, feature_dim = load_audio_features("extracted.db", song_info)
+song_features, feature_dim = load_audio_features("spotify_mpd_audio_features.db", song_info)
 print(f"Loaded features for {len(song_features)} songs out of {len(song_info)} total songs")
 
 # Create feature matrix for all nodes (playlists get zero features)

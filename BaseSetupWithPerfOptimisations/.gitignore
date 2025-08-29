@@ -1,7 +1,12 @@
 # Ignore everything
 *
 
-# Except .py and .txt files
+# Except tracked files
 !base_model_lightgcn_with_perf_optimisations.py
 !base_model_lightgcn_with_perf_optimisations.txt
+!data_object.pt
+!dataset_stats.json
+!playlist_info.json
+!song_info.json
+!spotify_mpd_audio_features.db
 !.gitignore

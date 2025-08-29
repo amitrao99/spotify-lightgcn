@@ -1,0 +1,25 @@
+# NOTE: Install torch and PyTorch Geometric per their official instructions first (see README and docs/GETTING_STARTED.md).
+# These packages are platform/torch/CUDA specific and are intentionally not pinned here.
+#
+# After torch + PyG are installed, install the rest with:
+#   pip install -r requirements.txt
+
+# Core scientific stack
+numpy>=1.23
+matplotlib>=3.7
+scikit-learn>=1.3
+ipython>=8.12
+tqdm>=4.65
+
+# Optional: Preprocessing (SNAP)
+# snap-stanford>=6.0.0
+
+# Deep learning (install separately; listed here for reference)
+# torch
+# torch_geometric
+# pyg_lib
+# torch_scatter
+# torch_sparse
+# torch_cluster
+# torch_spline_conv
+

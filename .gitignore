@@ -1,21 +1,69 @@
-# Ignore everything by default
-*
+################################################################################
+# Clean Python .gitignore for this repo                                        #
+################################################################################
 
-# Always keep these tracked
-!.gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Unit test / coverage reports
+.pytest_cache/
+.mypy_cache/
+.coverage*
+coverage.xml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project runtime artifacts (general)
+**/embeddings/
+logs/
+
+# Keep docs and top-level files tracked
+!README.md
+!requirements.txt
+!docs/
+!docs/**
 !hyperparameters.txt
 
-# Allow these directories (the directory AND everything inside)
-!BaseSetup/
+# Keep code directories tracked
 !BaseSetup/**
-!BaseSetupWithPerfOptimisations/
 !BaseSetupWithPerfOptimisations/**
-!FeatureAwareInitialization/
 !FeatureAwareInitialization/**
-!FeatureAwareMessagePassing/
 !FeatureAwareMessagePassing/**
-!MetricsCollection/
 !MetricsCollection/**
-!FinalPlots/
 !FinalPlots/**
 

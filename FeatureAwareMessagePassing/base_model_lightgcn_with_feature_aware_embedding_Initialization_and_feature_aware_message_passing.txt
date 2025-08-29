@@ -3,7 +3,7 @@ root@58e12a68a149:/MastersProject/LoggingAwareSetup/FeatureAwareMessagePassing# 
 Loading audio features from SQLite...
 ^CTraceback (most recent call last):
   File "/MastersProject/LoggingAwareSetup/FeatureAwareMessagePassing/FeatureAwareMessagePassing.py", line 143, in <module>
-    song_features, feature_dim = load_audio_features("extracted.db", song_info)
+    song_features, feature_dim = load_audio_features("spotify_mpd_audio_features.db", song_info)
                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/MastersProject/LoggingAwareSetup/FeatureAwareMessagePassing/FeatureAwareMessagePassing.py", line 59, in load_audio_features
     for row in cursor.fetchall():

@@ -1,98 +1,83 @@
-python base_model_lightgcn_with_feature_aware_embedding_Initialization.py
-============================================================
-HYPERPARAMETERS
-============================================================
-Epochs: 200
-Batch size: 512
-Learning rate: 1e-3
-Optimizer: Adam
-Embedding dimension: 64
-Number of LightGCN layers: 3
-k for recall@k: 300
-Device: cuda
-Loss function: BPR (Bayesian Personalized Ranking)
-Negative sampling ratio: 1:1
-Negative sampling mode: uniform
-Feature-informed initialization: Enabled
-Number of features: 7
-AMP enabled: True
-AMP dtype: torch.bfloat16
-============================================================
+Hyperparameters (Consolidated)
+==============================
 
-torch.compile enabled with mode='reduce-overhead'
-
-Total trainable parameters: 959,488
-============================================================
+This file summarizes the default hyperparameters and key data/loader settings used in each variant. These values are read directly from the current scripts and are intended as an at-a-glance reference. For authoritative values (or to change them), see the script files themselves.
 
 
+Global (shared assumptions)
+---------------------------
+- Split: torch_geometric.transforms.RandomLinkSplit(
+    is_undirected=True,
+    add_negative_train_samples=False,
+    neg_sampling_ratio=0,
+    num_val=0.15,
+    num_test=0.15
+  )
+- Optimizer: Adam
+- Learning rate: 1e-3
+- Loss: BPR (Bayesian Personalized Ranking)
+- Negative sampling ratio: 1:1 (one negative per positive)
+- k (recall@k): see per-variant
 
 
-python base_model_lightgcn_with_feature_aware_embedding_Initialization.py
-
-============================================================
-HYPERPARAMETERS
-============================================================
-Epochs: 200
-Batch size: 512
-Learning rate: 1e-3
-Optimizer: Adam
-Embedding dimension: 64
-Number of LightGCN layers: 3
-k for recall@k: 300
-Device: cuda
-Loss function: BPR (Bayesian Personalized Ranking)
-Negative sampling ratio: 1:1
-Negative sampling mode: uniform
-Feature-informed initialization: Enabled
-Number of features: 7
-AMP enabled: True
-AMP dtype: torch.bfloat16
-============================================================
-
-torch.compile enabled with mode='reduce-overhead'
-
-Total trainable parameters: 959,488
-============================================================
+Base Setup (BaseSetup/base_model_lightgcn.py)
+---------------------------------------------
+- epochs: 30
+- k: 300
+- num_layers: 3
+- batch_size (train/val/test): 2048 / 2048 / 2048
+- embedding_dim: 64
+- device: cuda if available, else cpu
+- save_emb_dir: "embeddings" (created if not exists)
+- Validation cadence: every epoch for ~first 10 (range(11)), then every 5 epochs
 
 
-python base_model_lightgcn_with_perf_optimisations.py
-
-============================================================
-HYPERPARAMETERS
-============================================================
-Epochs: 100
-Batch size: 2048
-Learning rate: 1e-3
-Optimizer: Adam
-Embedding dimension: 64
-Number of LightGCN layers: 3
-k for recall@k: 300
-Device: cuda
-Loss function: BPR (Bayesian Personalized Ranking)
-Negative sampling ratio: 1:1
-Negative sampling mode: uniform
-Embeddings save directory: embeddings
-============================================================
-
-Total trainable parameters: 959,488
-============================================================
+Performance-Optimized (BaseSetupWithPerfOptimisations/..._with_perf_optimisations.py)
+-------------------------------------------------------------------------------------
+- epochs: 30
+- k: 300
+- num_layers: 3
+- batch_size (train): 512
+- batch_size (val/test): 8192 (2048*4)
+- embedding_dim: 64
+- device: cuda if available, else cpu
+- save_emb_dir: "embeddings" (created if not exists)
+- Negative sampling mode: "uniform" (optional: "popularity")
+- AMP: enabled if CUDA available; dtype bfloat16 if supported else float16
+- GradScaler: enabled if AMP enabled
+- DataLoader perf: pin_memory=True, num_workers=6, prefetch_factor=32, persistent_workers=True
+- torch.compile: attempted with mode='reduce-overhead', fullgraph=True (falls back gracefully)
+- Validation cadence: every 10 epochs (per code)
 
 
-python base_model_lightgcn.py
+Feature-Aware Initialization (FeatureAwareInitialization/..._Initialization.py)
+------------------------------------------------------------------------------
+- epochs: 45
+- k: 300
+- layers: 3
+- emb_dim: 64
+- batch_size (train): 512
+- batch_size (val/test): 2048 (batch_size*4)
+- device: cuda if available, else cpu
+- SQLite DB: spotify_mpd_audio_features.db (feature columns e.g., danceability, energy, tempo, ...)
+- Negative sampling mode: "uniform" (optional: "popularity")
+- AMP: enabled if CUDA available; GradScaler enabled
+- DataLoader perf: pin_memory=True, num_workers=14, prefetch_factor=16, persistent_workers=True
+- torch.compile: attempted with mode='reduce-overhead', fullgraph=True
+- Validation cadence: after epoch >= 40
 
-============================================================
-HYPERPARAMETERS
-============================================================
-Epochs: 100
-Batch size: 2048
-Learning rate: 1e-3
-Optimizer: Adam
-Embedding dimension: 64
-Number of LightGCN layers: 3
-k for recall@k: 300
-Device: cuda
-Loss function: BPR (Bayesian Personalized Ranking)
-Negative sampling ratio: 1:1
-Embeddings save directory: embeddings
-============================================================
 
+Feature-Aware Message Passing (FeatureAwareMessagePassing/..._Initialization_and_feature_aware_message_passing.py)
+------------------------------------------------------------------------------------------------------------------
+- epochs: 200
+- k: 300
+- layers: 3
+- emb_dim: 64
+- batch_size (train): 512
+- batch_size (val/test): 2048 (batch_size*4)
+- device: cuda if available, else cpu
+- SQLite DB: spotify_mpd_audio_features.db (feature columns as above)
+- Negative sampling mode: "uniform" (optional: "popularity")
+- AMP: enabled if CUDA available; GradScaler enabled
+- DataLoader perf: pin_memory=True, num_workers=14, prefetch_factor=16, persistent_workers=True
+- torch.compile: attempted with mode='reduce-overhead', fullgraph=True
