@@ -50,8 +50,6 @@ Repository Structure
 - `BaseSetupWithPerfOptimisations/`: Base model with mixed precision and performance tweaks.
 - `FeatureAwareInitialization/`: Feature-aware embedding initialization (needs `spotify_mpd_audio_features.db`).
 - `FeatureAwareMessagePassing/`: Feature-aware initialization + message passing (needs `spotify_mpd_audio_features.db`).
-- `MetricsCollection/`: Saved metrics, embeddings, and experiment artifacts. (Reference only.)
-- `FinalPlots/`: Final visualizations. (Reference only.)
 - `hyperparameters.txt`: Legacy snapshot; not authoritative. See code and docs instead.
 - `docs/`: Setup, training, and inference guides.
 - `requirements.txt`: Python package dependencies for running the models.
@@ -157,9 +155,8 @@ Hyperparameters
 
 
 What To Ignore (Repo Browsing)
--------------------------------
+------------------------------
 
-- `FinalPlots/` and `MetricsCollection/` contain plots and experiment artifacts and are not required to run the code.
 - `hyperparameters.txt` is a legacy dump; refer to code + docs for authoritative hyperparameters.
 
 
