@@ -1,77 +1,42 @@
 Inference (Top‑K Recommendations)
 ================================
 
-This guide shows how to produce top‑k song recommendations for a given playlist using the LightGCN model logic present in each script.
+Quick Start (Ready‑to‑Run)
+--------------------------
+
+To immediately test the model and see predictions, run the ready‑to‑use script in the Feature‑Aware Message Passing folder. It loads the prepared graph and the included checkpoint, computes embeddings, prints top‑k recommendations for a playlist, and reports hits + recall@k for that playlist using the same RandomLinkSplit seed as training. It does not retrain.
+
+From the repo root:
+
+```
+python FeatureAwareMessagePassing/inference.py    # defaults: playlist 200, k=300
+```
+
+Options:
+
+- `--playlist-id <int>`: choose a specific playlist node (0..num_playlists-1). Defaults to `200`.
+- `--k <int>`: top‑k for recommendations and recall (default 300).
+- `--data-dir <path>`: where `data_object.pt`, `dataset_stats.json`, `song_info.json`, and `feature_aware_lightgcn_checkpoint.pt` reside (defaults to `FeatureAwareMessagePassing/`).
+- `--audio-db <path>`: optional SQLite DB path to include audio features at inference.
+
+What it uses (in the folder):
+
+- `data_object.pt`: PyG graph data.
+- `dataset_stats.json`: `{ "num_playlists": ..., "num_nodes": ... }`.
+- `song_info.json`: track metadata for pretty printing.
+- `feature_aware_lightgcn_checkpoint.pt`: pretrained checkpoint for this variant.
+
+The script reproduces the model architecture used during training (embedding dim 64, 3 layers), loads the checkpoint, builds the normalized message‑passing graph from the train split (to avoid leakage), computes embeddings, and prints recommendations. If `--audio-db` is provided, it loads 7‑dim audio features for songs; otherwise, it uses zeros (fast path).
 
 
-Approach
---------
+Manual Recipe (Advanced)
+------------------------
 
-The scripts already define:
-
-- `GNN.gnn_propagation(edge_index)` — returns multi‑scale embeddings for all nodes.
-- `GNN.predict_scores(edge_index, embs)` — scores playlist–song pairs via dot product.
-- `evaluation(...)` — runs recall@k (includes logic to exclude already‑known edges from recommendations).
-
-To get recommendations for one playlist ID, we can adapt the evaluation logic as follows:
+If you want to roll your own minimal snippet instead of using the script above, the approach is:
 
 1) Load the graph and dataset stats.
 2) Recreate the model with the same hyperparameters used in training (embedding dim, layers, etc.).
-3) Load weights if you saved a checkpoint (some variants include checkpoints in their folders).
-4) Run propagation to get node embeddings.
-5) Score all songs for the target playlist and take the top‑k, excluding already‑known songs for that playlist.
+3) Run propagation to get node embeddings.
+4) Score all songs for a target playlist and take the top‑k, excluding already‑known songs.
 
-
-Minimal Example (Base Setup)
-----------------------------
-
-Run this from the repository root after training (adjust paths, hyperparameters, and playlist_id as needed):
-
-```python
-import os, json, torch
-from BaseSetup.base_model_lightgcn import GNN
-
-# 1) Load graph and stats
-data = torch.load('BaseSetup/data_object.pt', weights_only=False)
-with open('BaseSetup/dataset_stats.json') as f:
-    stats = json.load(f)
-num_playlists, num_nodes = stats['num_playlists'], stats['num_nodes']
-
-# 2) Recreate the model (match training hyperparameters)
-embedding_dim = 64
-num_layers = 3
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-gnn = GNN(embedding_dim=embedding_dim, num_nodes=num_nodes, num_playlists=num_playlists, num_layers=num_layers).to(device)
-
-# 3) (Optional) Load saved weights if available
-# gnn.load_state_dict(torch.load('path/to/checkpoint.pt', map_location=device))
-gnn.eval()
-
-# 4) Compute multi‑scale embeddings
-edge_index_mp = data.edge_index.to(device)
-embs = gnn.gnn_propagation(edge_index_mp)
-
-# 5) Recommend top‑k for a given playlist
-playlist_id = 0            # choose a playlist index in [0, num_playlists)
-k = 20                     # how many songs to recommend
-song_emb = embs[num_playlists:, :]                 # all songs
-pl_emb = embs[playlist_id:playlist_id+1, :]        # single playlist
-scores = torch.matmul(pl_emb, song_emb.T).squeeze()  # dot product scores
-
-# Exclude songs already linked to this playlist (don’t re‑recommend known items)
-known = data.edge_index[:, data.edge_index[0, :] == playlist_id]
-known_song_ids = known[1, :] - num_playlists
-scores[known_song_ids] = -1e9
-
-topk_vals, topk_idx = torch.topk(scores, k=k)
-recommended_song_node_ids = (topk_idx + num_playlists).tolist()
-print('Top‑k song node IDs:', recommended_song_node_ids)
-```
-
-Notes
------
-
-- The example uses the Base Setup class for convenience. For other variants, import the corresponding model class or reuse the same method calls inside that script.
-- If you trained on GPU, ensure consistent device placement when loading weights and tensors.
-- To map node IDs to track metadata, use `song_info.json` (e.g., artist/title) from the same folder.
-
+See the training scripts for model class definitions and evaluation utilities.

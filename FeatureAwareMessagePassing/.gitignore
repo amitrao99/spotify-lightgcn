@@ -12,3 +12,4 @@
 # Also track checkpoint file
 !feature_aware_lightgcn_checkpoint.pt
 !.gitignore
+!inference.py

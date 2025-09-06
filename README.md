@@ -11,6 +11,16 @@ LightGCN-based recommender systems for the Spotify Million Playlist Dataset, pac
 This repository is thesis-backed and structured for clarity and reproducibility.
 
 
+Quick Inference
+----------------
+
+Want to see predictions right away? Run the ready-to-use inference script that loads the prepared graph and the included checkpoint for the Feature-Aware Message Passing variant:
+
+- `python FeatureAwareMessagePassing/inference.py`  (defaults: playlist 200, top‑k=300)
+
+It prints top‑k recommendations for a playlist (with track/artist) and reports hits + recall@k for that playlist using the same random split seed as training. Use `--playlist-id <id>` to target a specific playlist node (defaults to 200). Optionally pass `--audio-db path/to/spotify_mpd_audio_features.db` to include audio features at inference.
+
+
 Quick Start
 -----------
 
@@ -138,14 +148,9 @@ Notes:
 Inference
 ---------
 
-The evaluation methods in each script compute recall@k and include all logic needed to produce ranked recommendations. A minimal recipe to get top-k song recommendations for a given playlist is provided in `docs/INFERENCE.md`. In short:
+- Ready now: `python FeatureAwareMessagePassing/inference.py` (uses included checkpoint, prints recommendations). See `docs/INFERENCE.md` for options and details.
 
-1) Load the prepared graph (`data_object.pt`, `dataset_stats.json`).
-2) Recreate the model with the same hyperparameters as training.
-3) Run `gnn.gnn_propagation()` to obtain multi-scale embeddings.
-4) Compute scores via dot product and take `topk`, excluding songs already linked to the playlist.
-
-If you saved model weights (some variants include checkpoints), you can load them with `gnn.load_state_dict(torch.load("path/to/checkpoint.pt"))` before inference.
+- Prefer a manual snippet? `docs/INFERENCE.md` also documents the minimal recipe using the model’s propagation and scoring utilities.
 
 
 Hyperparameters
