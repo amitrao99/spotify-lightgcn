@@ -17,6 +17,8 @@ Feature-aware variants additionally require:
 
 - `spotify_mpd_audio_features.db` — SQLite database containing audio feature columns (e.g., `danceability`, `energy`, `tempo`, ...).
 
+LFS note: The DB is stored via Git LFS. After cloning, run `git lfs install && git lfs pull` to fetch binaries; ZIP downloads from GitHub won’t include LFS files.
+
 Note: We do not rely on `hyperparameters.txt` in the project root; hyperparameters are defined in the scripts below.
 
 

@@ -64,6 +64,22 @@ After torch and PyG are installed:
 This installs common utilities (numpy, matplotlib, scikit-learn, ipython, tqdm). The preprocessing script optionally uses SNAP; see below.
 
 
+Git LFS (Large Files)
+---------------------
+
+The repository stores large artifacts (e.g., `spotify_mpd_audio_features.db`) via Git LFS. If you cloned the repo and don’t see the real `.db` file (only a small pointer file), install and pull via LFS:
+
+- Install LFS:
+  - macOS: `brew install git-lfs`
+  - Linux: `sudo apt-get install git-lfs` (or see https://git-lfs.com)
+  - Windows: `winget install Git.LFS` or `choco install git-lfs`
+- Initialize in this repo: `git lfs install`
+- Pull binaries: `git lfs pull` (or `git lfs fetch --all && git lfs pull`)
+- Verify: `git lfs ls-files` lists tracked files; `ls -lh FeatureAwareInitialization/spotify_mpd_audio_features.db` shows the real size.
+
+Note: GitHub ZIP downloads do not include LFS binaries. Always use `git clone` and then run `git lfs pull`.
+
+
 Optional: Preprocessing Dependencies
 ------------------------------------
 
@@ -73,9 +89,28 @@ Optional: Preprocessing Dependencies
 - SNAP (Python module `snap`) can be installed via `pip install snap-stanford` or from source. Installation varies by platform; consult SNAP docs if needed.
 
 
+Run Preprocessing (optional)
+----------------------------
+
+If you start from the raw Spotify MPD JSON files, use `BaseSetup/preprocess.py` to build the K-core graph and produce the files needed by the training scripts.
+
+- Place the MPD `.json` files in a folder (for example, `BaseSetup/data`).
+- Open `BaseSetup/preprocess.py` and set the top-level variables:
+  - `data_dir`: folder with MPD files
+  - `NUM_FILES_TO_USE`: number of MPD files to include
+  - `save_dir`: output directory (often `'.'` to save next to the training script)
+  - `K`: K-core value
+- Run: `python BaseSetup/preprocess.py`
+
+Outputs include:
+- `data_object.pt`: PyG graph
+- `playlist_info.json` and `song_info.json`: metadata for analysis
+
+The training scripts also expect `dataset_stats.json` with `{ "num_playlists": ..., "num_nodes": ... }` next to the script. If you regenerate the dataset, update or recreate this file accordingly.
+
+
 Next Steps
 ----------
 
 - See `docs/TRAINING.md` to train/evaluate any of the four variants.
 - See `docs/INFERENCE.md` for a minimal, clear recipe to produce top-k recommendations for a playlist.
-

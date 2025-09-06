@@ -75,6 +75,22 @@ Feature-aware variants additionally require:
 If starting from raw Spotify MPD data, see `BaseSetup/preprocess.py` for the intended preprocessing flow (K-core via SNAP, re-indexing, and conversion to PyG `Data`). Preprocessing is optional if you already have the files listed above.
 
 
+Preprocessing
+-------------
+
+Use `BaseSetup/preprocess.py` to build a K-core subgraph from the Spotify Million Playlist Dataset and convert it into a PyTorch Geometric `Data` object.
+
+- Requirements: install SNAP (`pip install snap-stanford`) and tqdm (`pip install tqdm`).
+- Inputs: MPD JSON files downloaded from the challenge site. Place them in a folder and point `data_dir` to it.
+- Configure in script: set `data_dir`, `NUM_FILES_TO_USE`, `save_dir`, and the K-core value `K` near the top of the file.
+- Run: `python BaseSetup/preprocess.py`
+- Outputs (written to `save_dir`): `data_object.pt`, `playlist_info.json`, `song_info.json`.
+
+Notes:
+- The training scripts expect `data_object.pt` and a `dataset_stats.json` with `{ "num_playlists": ..., "num_nodes": ... }` alongside each training script. If you regenerate the dataset, update or recreate `dataset_stats.json` accordingly.
+- To train from a different folder, either run preprocessing with `save_dir='.'` from that folder or copy the generated files next to the training script you plan to run.
+
+
 Training
 --------
 
@@ -98,6 +114,27 @@ Notes:
 - The base script can optionally save intermediate embeddings during validation (`embeddings/` folder).
 
 See `docs/TRAINING.md` for detailed tips, expected console logs, and performance notes.
+
+
+Large Files (Git LFS)
+---------------------
+
+The audio feature database (`spotify_mpd_audio_features.db`) is tracked with Git LFS.
+
+- Install LFS:
+  - macOS: `brew install git-lfs`
+  - Linux: `sudo apt-get install git-lfs` (or see https://git-lfs.com)
+  - Windows: `winget install Git.LFS` or `choco install git-lfs`
+- Initialize in your repo: `git lfs install`
+- Pull LFS files: `git lfs pull` (or `git lfs fetch --all && git lfs pull`)
+- Verify: `git lfs ls-files` should list the `.db` file; `ls -lh FeatureAwareInitialization/spotify_mpd_audio_features.db` should show its real size.
+
+Notes:
+- GitHub’s ZIP download does not include LFS binaries (you’ll get small pointer files). Clone the repo and run `git lfs pull`.
+- If your local file is named `extracted.db`, rename or copy it to where the scripts expect it, e.g.:
+  - `mv temp/extracted.db FeatureAwareInitialization/spotify_mpd_audio_features.db`
+  - `cp FeatureAwareInitialization/spotify_mpd_audio_features.db FeatureAwareMessagePassing/`
+- If `git lfs pull` fails due to bandwidth/storage quotas, consider hosting the DB as a GitHub Release asset or provide an alternate download link in `docs/`.
 
 
 Inference
